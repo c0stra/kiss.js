@@ -42,13 +42,15 @@ function x(parameter) {
 }
 
 function text(value) {
-    var builder = xText(document.createTextNode(value))
     if(value instanceof ValueModel) {
+        var builder = xText(document.createTextNode(value.value))
         value.onValueChange(function(event) {
             builder.setValue(event.value)
-        })
+        }, false)
+        return builder
+    } else {
+        return xText(document.createTextNode(value))
     }
-    return builder
 }
 
 /**
