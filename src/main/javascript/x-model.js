@@ -75,10 +75,9 @@ function newToggleModel(initial) {
     return new ToggleModel().initToggleModel(initial || false)
 }
 
-function toggle(toggleModel) {
-    return function() {toggleModel.toggle()}
+function optional(toggleModel, value) {
+    return mapToggleModel(toggleModel, value, null)
 }
-
 
 function ObjectModel() {}
 
@@ -151,6 +150,10 @@ function mapToggleModel(toggleModel, trueValue, falseValue) {
     }, [toggleModel])
 }
 
-function concatModel() {
-    return functionModel(function() {return Array.from(arguments).join("")}, arguments)
+function concatModel(inputs) {
+    return inputs.length > 1 ? functionModel(function() {return Array.from(arguments).join("")}, inputs) : inputs[0]
+}
+
+function X() {
+    return concatModel(arguments)
 }

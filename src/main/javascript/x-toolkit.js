@@ -1,6 +1,6 @@
 
-function exp(model) {
-    return span().setClass(mapToggleModel(model, 'node expanded', 'node')).add('▶').onClick(toggle(model))
+function expander(model) {
+    return span().setClass('node', optional(model, ' expanded')).add('▶').onClick(toggle(model))
 }
 
 function hbar(valueModel, className) {

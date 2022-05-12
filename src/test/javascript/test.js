@@ -2,5 +2,6 @@
 var model = newToggleModel()
 
 body().add(
-    div().title(concatModel('a ', mapToggleModel(model, 'X', 'Y'), ' x')).add('Click').onClick(function() {model.toggle()})
+    div().title(X('a ', mapToggleModel(model, 'X', 'Y'), ' x')).add('Click').onClick(toggle(model)),
+    expander(model)
 )

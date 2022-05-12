@@ -122,8 +122,8 @@ XBuilder.prototype.set = function (name, value) {
 }
 
 
-XBuilder.prototype.setClass = function(value) {
-    return this.set('class', value)
+XBuilder.prototype.setClass = function() {
+    return this.set('class', concatModel(arguments))
 }
 
 XBuilder.prototype.id = function(value) {
@@ -178,14 +178,18 @@ XBuilder.prototype.draggable = function(value) {
     return this.set('draggable', value)
 }
 
+XBuilder.prototype.rel = function(value) {
+    return this.set('rel', value)
+}
+
 /*
   Manipulation of Element style properties
  */
-XBuilder.prototype.css = function (property, value, unit) {
+XBuilder.prototype.css = function (property, value) {
     var node = this.node
     function css(event) {
         if(event.value === null) node.style.removeProperty(property)
-        else node.style.setProperty(property, event.value + (unit || ''))
+        else node.style.setProperty(property, event.value)
     }
     if(value instanceof ValueModel) value.onValueChange(css)
     else css({value: value})
@@ -193,27 +197,27 @@ XBuilder.prototype.css = function (property, value, unit) {
 }
 
 XBuilder.prototype.width = function(value, unit) {
-    return this.css('width', value, unit || 'px')
+    return this.css('width', X(value, unit || 'px'))
 }
 
 XBuilder.prototype.height = function(value, unit) {
-    return this.css('height', value, unit || 'px')
+    return this.css('height', X(value, unit || 'px'))
 }
 
 XBuilder.prototype.top = function(value, unit) {
-    return this.css('top', value, unit || 'px')
+    return this.css('top', X(value, unit || 'px'))
 }
 
 XBuilder.prototype.bottom = function(value, unit) {
-    return this.css('bottom', value, unit || 'px')
+    return this.css('bottom', X(value, unit || 'px'))
 }
 
 XBuilder.prototype.left = function(value, unit) {
-    return this.css('left', value, unit || 'px')
+    return this.css('left', X(value, unit || 'px'))
 }
 
 XBuilder.prototype.right = function(value, unit) {
-    return this.css('right', value, unit || 'px')
+    return this.css('right', X(value, unit || 'px'))
 }
 
 XBuilder.prototype.display = function(value) {
@@ -241,7 +245,7 @@ XBuilder.prototype.float = function(value) {
 }
 
 XBuilder.prototype.paddingLeft = function (value, unit) {
-    return this.css('paddingLeft', value, unit || 'px')
+    return this.css('paddingLeft', X(value, unit || 'px'))
 }
 
 /*
@@ -301,6 +305,10 @@ function span(className) {
 
 function img(src) {
     return element('img').src(src)
+}
+
+function link(rel) {
+    return element('link').rel(rel)
 }
 
 function a(href) {
@@ -417,8 +425,8 @@ function label(forInput) {
     return element('label').set('for', forInput)
 }
 
-function fieldset(legend) {
-    return legend ? element('fieldset').add(legend(legend)) : element('fieldset')
+function fieldset(legendValue) {
+    return legendValue ? element('fieldset').add(legend(legendValue)) : element('fieldset')
 }
 
 function legend(value) {
