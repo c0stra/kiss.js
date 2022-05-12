@@ -1,6 +1,6 @@
 
 function expander(model) {
-    return span().setClass('node', optional(model, ' expanded')).add('▶').onClick(toggle(model))
+    return span().display('inline-block').transition('transform .2s ease-in-out').transform(optional(model, 'rotate(90deg)')).add('▶').onClick(toggle(model))
 }
 
 function hbar(valueModel, className) {

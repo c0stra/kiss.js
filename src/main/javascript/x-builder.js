@@ -220,6 +220,10 @@ XBuilder.prototype.right = function(value, unit) {
     return this.css('right', X(value, unit || 'px'))
 }
 
+XBuilder.prototype.color = function(value) {
+    return this.css('color', value)
+}
+
 XBuilder.prototype.display = function(value) {
     return this.css('display', value instanceof ToggleModel ? mapToggleModel(value, null, 'none') : value)
 }
@@ -246,6 +250,18 @@ XBuilder.prototype.float = function(value) {
 
 XBuilder.prototype.paddingLeft = function (value, unit) {
     return this.css('paddingLeft', X(value, unit || 'px'))
+}
+
+XBuilder.prototype.transition = function(value) {
+    return this.css('transition', value)
+}
+
+XBuilder.prototype.transform = function(value) {
+    return this.css('transform', value)
+}
+
+XBuilder.prototype.rotate = function(value, unit) {
+    return this.transform(X('rotate(', value, unit, ')'))
 }
 
 /*
