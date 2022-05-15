@@ -225,7 +225,7 @@ XBuilder.prototype.color = function(value) {
 }
 
 XBuilder.prototype.display = function(value) {
-    return this.css('display', value instanceof ToggleModel ? mapToggleModel(value, null, 'none') : value)
+    return this.css('display', (value instanceof ValueModel && (value.value === true || value.value === false)) ? mapToggleModel(value, null, 'none') : value)
 }
 
 XBuilder.prototype.visibility = function(value) {
