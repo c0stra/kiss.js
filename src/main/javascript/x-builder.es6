@@ -98,6 +98,8 @@ class XBuilder extends XNode {
      Manipulation of Element attributes.
      */
     set(name, ...args) {
+        if(args.length === 0)
+            return this
         let value = X(...args)
         let node = this.node;
         function attr(event) {
@@ -109,66 +111,68 @@ class XBuilder extends XNode {
         return this
     }
 
-    setClass(...args) {
-        return this.set('class', ...args)
+    setClass(...value) {
+        return this.set('class', ...value)
     }
 
-    id(value) {
-        return this.set('id', value)
+    id(...value) {
+        return this.set('id', ...value)
     }
 
-    name(value) {
-        return this.set('name', value)
+    name(...value) {
+        return this.set('name', ...value)
     }
 
-    title(value) {
-        return this.set('title', value)
+    title(...value) {
+        return this.set('title', ...value)
     }
 
-    href(...parts) {
-        return this.set('href', ...parts)
+    href(...value) {
+        return this.set('href', ...value)
     }
 
-    type(value) {
-        return this.set('type', value)
+    type(...value) {
+        return this.set('type', ...value)
     }
 
-    value(value) {
-        return this.set('value', value)
+    value(...value) {
+        return this.set('value', ...value)
     }
 
-    readonly(value) {
-        return this.set('readonly', value)
+    readonly(...value) {
+        return this.set('readonly', ...value)
     }
 
-    method(value) {
-        return this.set('method', value)
+    method(...value) {
+        return this.set('method', ...value)
     }
 
-    size(value) {
-        return this.set('size', value)
+    size(...value) {
+        return this.set('size', ...value)
     }
 
-    src(value) {
-        return this.set('src', value)
+    src(...value) {
+        return this.set('src', ...value)
     }
 
-    alt(value) {
-        return this.set('alt', value)
+    alt(...value) {
+        return this.set('alt', ...value)
     }
 
-    draggable(value) {
-        return this.set('draggable', value)
+    draggable(...value) {
+        return this.set('draggable', ...value)
     }
 
-    rel(value) {
-        return this.set('rel', value)
+    rel(...value) {
+        return this.set('rel', ...value)
     }
 
     /*
       Manipulation of Element style properties
      */
     css(property, ...args) {
+        if(args.length === 0)
+            return this
         let value = X(...args)
         let node = this.node;
         function css(event) {
@@ -253,8 +257,8 @@ class XBuilder extends XNode {
     }
 
     /*
-          Dealing with events
-         */
+     Dealing with events
+     */
     on(event, handler, bubble) {
         this.node.addEventListener(event, bubble ? function (e) {
             handler(e)
@@ -277,10 +281,11 @@ class XBuilder extends XNode {
     onReset(handler, bubble) {
         return this.on('reset', handler, bubble)
     }
+
 }
 
 
-function uiBuilder(node) {
+function builder(node) {
     return new XBuilder(node)
 }
 
@@ -290,43 +295,39 @@ function uiBuilder(node) {
   Ready to use element builders.
  */
 function body() {
-    return uiBuilder(document.body)
+    return builder(document.body)
 }
 
 function head() {
-    return uiBuilder(document.head)
+    return builder(document.head)
 }
 
 function byId(id) {
-    return uiBuilder(document.getElementById(id))
+    return builder(document.getElementById(id))
 }
 
-function element(name, className) {
-    var builder = uiBuilder(document.createElement(name))
-    if(className) builder.setClass(className)
-    return builder
+function element(name, ...className) {
+    return  builder(document.createElement(name)).setClass(...className)
 }
 
-function div(className) {
-    return element('div', className)
+function div(...className) {
+    return element('div', ...className)
 }
 
-function span(className) {
-    return element('span', className)
+function span(...className) {
+    return element('span', ...className)
 }
 
-function img(src) {
-    return element('img').src(src)
+function img(...src) {
+    return element('img').src(...src)
 }
 
 function link(rel) {
     return element('link').rel(rel)
 }
 
-function a(href) {
-    var builder = element('a')
-    if(href) builder.href(href)
-    return builder
+function a(...href) {
+    return element('a').href(...href)
 }
 
 function h1() {
