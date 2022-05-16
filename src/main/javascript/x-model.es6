@@ -1,4 +1,3 @@
-
 class XSignal {
     constructor() {
         this.handlers = []
@@ -27,6 +26,7 @@ class XValue {
 
     set(newValue) {
         this.signal.fire({oldValue: this.value, value: this.value = newValue})
+        return this
     }
 
     onChange(handler, initialize = true) {
@@ -54,7 +54,8 @@ function functionModel(func, ...inputs) {
     for(let i = 0; i < inputs.length; i++) {
         if(inputs[i] instanceof XValue) {
             args[i] = inputs[i].get()
-            inputs[i].onChange(event => {args[i] = event.value; result.set(func(...args))}, false)
+            const c = i
+            inputs[i].onChange(event => {args[c] = event.value; result.set(func(...args))}, false)
         } else {
             args[i] = inputs[i]
         }
@@ -66,14 +67,30 @@ function functionModel(func, ...inputs) {
 function transform(func, model) {
     return functionModel(func, model)
 }
+
 function mapBooleanModel(model, trueValue, falseValue) {
-    return transform(value => value ? trueValue : falseValue)
+    return transform(value => value ? trueValue : falseValue, model)
 }
+
 function optional(model, value) {
     return mapBooleanModel(model, value, null)
 }
 
 function X(...inputs) {
-    return inputs.length > 1 ? functionModel(() => Array.from(arguments).join(""), ...inputs) : inputs[0]
+    return inputs.length > 1 ? functionModel((...args) => args.join(""), ...inputs) : inputs[0]
 }
 
+class XEnabledValue extends XValue {
+    constructor(enabled, initialValue) {
+        super(initialValue);
+        this.enabled = booleanModel(enabled)
+    }
+
+    set(newValue) {
+        return this.enabled.get() ? super.set(newValue) : this;
+    }
+}
+
+function enabledValueModel(enabled = false, initialValue = false) {
+    return new XEnabledValue(enabled, initialValue)
+}

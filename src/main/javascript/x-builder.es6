@@ -1,10 +1,8 @@
+/**
+ * Class UI Element is a wrapper for DOM element, marking, that such object has a DOM element representing it's
+ * visualization.
+ */
 class XNode {
-    /**
-     * Class UI Element is a wrapper for DOM element, marking, that such object has a DOM element representing it's
-     * visualization.
-     *
-     * @constructor
-     */
     constructor(node) {
         this.node = node
     }
@@ -44,7 +42,7 @@ function text(value) {
     if(value instanceof XValue) {
         var builder = xText(document.createTextNode(value.get()))
         value.onChange(function(event) {
-            builder.set(event.value)
+            builder.setValue(event.value)
         }, false)
         return builder
     } else {
@@ -97,10 +95,10 @@ class XBuilder extends XNode {
     }
 
     /*
-          Manipulation of Element attributes.
-         */
+     Manipulation of Element attributes.
+     */
     set(name, ...args) {
-        let value = X(args)
+        let value = X(...args)
         let node = this.node;
         function attr(event) {
             if(event.value === null) node.removeAttribute(name)
@@ -112,7 +110,7 @@ class XBuilder extends XNode {
     }
 
     setClass(...args) {
-        return this.set('class', concatModel(args))
+        return this.set('class', ...args)
     }
 
     id(value) {
@@ -127,8 +125,8 @@ class XBuilder extends XNode {
         return this.set('title', value)
     }
 
-    href(value) {
-        return this.set('href', value)
+    href(...parts) {
+        return this.set('href', ...parts)
     }
 
     type(value) {
@@ -168,10 +166,10 @@ class XBuilder extends XNode {
     }
 
     /*
-          Manipulation of Element style properties
-         */
+      Manipulation of Element style properties
+     */
     css(property, ...args) {
-        let value = X(args)
+        let value = X(...args)
         let node = this.node;
         function css(event) {
             if(event.value === null) node.style.removeProperty(property)
@@ -236,6 +234,10 @@ class XBuilder extends XNode {
 
     paddingLeft(value, unit) {
         return this.css('paddingLeft', X(value, unit || 'px'))
+    }
+
+    cursor(value) {
+        return this.css('cursor', value)
     }
 
     transition(value) {
