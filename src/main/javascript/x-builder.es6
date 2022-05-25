@@ -10,6 +10,21 @@ class XNode {
     get() {
         return this.node
     }
+
+    prepend(node) {
+        this.node.parentNode.insertBefore(x(node).get(), this.node)
+        return this
+    }
+
+    remove() {
+        this.node.parentNode.removeChild(this.node)
+        return this
+    }
+
+    replace(replacement) {
+        this.node.parentNode.replaceChild(replacement.node, this.node)
+        return this
+    }
 }
 
 function xNode(node) {
@@ -38,16 +53,16 @@ function x(parameter) {
     return text(parameter)
 }
 
+function valueView(value) {
+    var builder = xText(document.createTextNode(value.get()))
+    value.onChange(function(event) {
+        builder.setValue(event.value)
+    }, false)
+    return builder
+}
+
 function text(value) {
-    if(value instanceof XValue) {
-        var builder = xText(document.createTextNode(value.get()))
-        value.onChange(function(event) {
-            builder.setValue(event.value)
-        }, false)
-        return builder
-    } else {
-        return xText(document.createTextNode(value))
-    }
+    return value instanceof XValue ? valueView(value) : xText(document.createTextNode(value));
 }
 
 class XBuilder extends XNode {
@@ -71,16 +86,6 @@ class XBuilder extends XNode {
 
     to(parent) {
         parent.add(this)
-        return this
-    }
-
-    remove() {
-        this.node.parentNode.removeChild(this.node)
-        return this
-    }
-
-    replace(replacement) {
-        this.node.parentNode.replaceChild(replacement.node, this.node)
         return this
     }
 
@@ -512,4 +517,14 @@ function del() {
 
 function ins() {
     return element('ins')
+}
+
+function fragment() {
+    return builder(document.createDocumentFragment())
+}
+
+
+function each(iterator, itemView = item => item, boundary = xText('')) {
+    iterator.onNext(item => boundary.prepend(itemView(item.value)))
+    return fragment().add(boundary)
 }

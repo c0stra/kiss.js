@@ -94,3 +94,23 @@ class XEnabledValue extends XValue {
 function enabledValueModel(enabled = false, initialValue = false) {
     return new XEnabledValue(enabled, initialValue)
 }
+
+
+class XIterator {
+    constructor() {
+        this.nextSignal = new XSignal()
+    }
+
+    next(item) {
+        this.nextSignal.fire({value: item})
+    }
+
+    onNext(handler) {
+        this.nextSignal.add(handler)
+    }
+}
+
+
+function iterator() {
+    return new XIterator()
+}
