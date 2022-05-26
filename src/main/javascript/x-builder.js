@@ -230,7 +230,7 @@ class XBuilder extends XNode {
     }
 
     backgroundColor(value) {
-        return this.css('backgroundColor', value)
+        return this.css('background-color', value)
     }
 
     position(value) {
@@ -242,7 +242,7 @@ class XBuilder extends XNode {
     }
 
     paddingLeft(value, unit) {
-        return this.css('paddingLeft', X(value, unit || 'px'))
+        return this.css('padding-left', X(value, unit || 'px'))
     }
 
     cursor(value) {
