@@ -96,12 +96,12 @@ function enabledValueModel(enabled = false, initialValue = false) {
 }
 
 
-class XIterator {
+class XProducer {
     constructor() {
         this.nextSignal = new XSignal()
     }
 
-    next(item) {
+    add(item) {
         this.nextSignal.fire({value: item})
     }
 
@@ -111,6 +111,6 @@ class XIterator {
 }
 
 
-function iterator() {
-    return new XIterator()
+function producer() {
+    return new XProducer()
 }
