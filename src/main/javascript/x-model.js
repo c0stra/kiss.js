@@ -103,6 +103,7 @@ class XProducer {
 
     add(item) {
         this.nextSignal.fire({value: item})
+        return item
     }
 
     onNext(handler) {
