@@ -25,7 +25,8 @@ class XValue {
     }
 
     set(newValue) {
-        this.signal.fire({oldValue: this.value, value: this.value = newValue})
+        if(this.value !== newValue)
+            this.signal.fire({oldValue: this.value, value: this.value = newValue})
         return this
     }
 
