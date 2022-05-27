@@ -189,28 +189,28 @@ class XBuilder extends XNode {
         return this
     }
 
-    width(value, unit) {
-        return this.css('width', X(value, unit || 'px'))
+    width(value, unit = 'px') {
+        return this.css('width', X(value, unit))
     }
 
-    height(value, unit) {
-        return this.css('height', X(value, unit || 'px'))
+    height(value, unit = 'px') {
+        return this.css('height', X(value, unit))
     }
 
-    top(value, unit) {
-        return this.css('top', X(value, unit || 'px'))
+    top(value, unit = 'px') {
+        return this.css('top', X(value, unit))
     }
 
-    bottom(value, unit) {
-        return this.css('bottom', X(value, unit || 'px'))
+    bottom(value, unit = 'px') {
+        return this.css('bottom', X(value, unit))
     }
 
-    left(value, unit) {
-        return this.css('left', X(value, unit || 'px'))
+    left(value, unit = 'px') {
+        return this.css('left', X(value, unit))
     }
 
-    right(value, unit) {
-        return this.css('right', X(value, unit || 'px'))
+    right(value, unit = 'px') {
+        return this.css('right', X(value, unit))
     }
 
     color(value) {
@@ -241,8 +241,36 @@ class XBuilder extends XNode {
         return this.css('float', value)
     }
 
-    paddingLeft(value, unit) {
-        return this.css('padding-left', X(value, unit || 'px'))
+    paddingLeft(value, unit = 'px') {
+        return this.css('padding-left', X(value, unit))
+    }
+
+    paddingRight(value, unit = 'px') {
+        return this.css('padding-right', X(value, unit))
+    }
+
+    paddingTop(value, unit = 'px') {
+        return this.css('padding-top', X(value, unit))
+    }
+
+    paddingBottom(value, unit = 'px') {
+        return this.css('padding-bottom', X(value, unit))
+    }
+
+    marginLeft(value, unit = 'px') {
+        return this.css('margin-left', X(value, unit))
+    }
+
+    marginRight(value, unit = 'px') {
+        return this.css('margin-right', X(value, unit))
+    }
+
+    marginTop(value, unit = 'px') {
+        return this.css('margin-top', X(value, unit))
+    }
+
+    marginBottom(value, unit = 'px') {
+        return this.css('margin-bottom', X(value, unit))
     }
 
     cursor(value) {
