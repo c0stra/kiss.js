@@ -3,9 +3,7 @@
  * visualization.
  */
 class XNode {
-    constructor(node) {
-        this.node = node
-    }
+    constructor(node) {this.node = node}
 
     get() {
         return this.node
@@ -103,12 +101,11 @@ class XBuilder extends XNode {
     set(name, ...args) {
         if(args.length === 0)
             return this
-        let value = X(...args)
-        let node = this.node;
-        function attr(event) {
-            if(event.value === null) node.removeAttribute(name)
-            else node.setAttribute(name, event.value)
+        let attr = event => {
+            if(event.value === null) this.node.removeAttribute(name)
+            else this.node.setAttribute(name, event.value)
         }
+        let value = X(...args)
         if(value instanceof XValue) value.onChange(attr)
         else attr({value: value})
         return this
