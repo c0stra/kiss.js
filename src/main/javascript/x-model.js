@@ -69,7 +69,7 @@ function transform(func, model) {
     return functionModel(func, model)
 }
 
-function mapBooleanModel(model, trueValue, falseValue) {
+function mapBooleanModel(model, trueValue, falseValue = null) {
     return transform(value => value ? trueValue : falseValue, model)
 }
 
@@ -158,4 +158,39 @@ class XList extends XProducer {
         this.items.remove(this.items.indexOf(item))
     }
 
+}
+
+
+class XPool {
+    constructor(...pool) {
+        this.items = pool
+        this.indexes = []
+        for(let i = 0; i < this.items.length; i++)
+            this.indexes.push(i)
+    }
+
+    acquire() {
+        return {
+            value: this.items[this.indexes[0]],
+            index: this.indexes.shift(),
+        }
+    }
+
+    release(item) {
+        if(item) {
+            this.indexes.unshift(item.index)
+            this.indexes.sort()
+        }
+        return {value: null}
+    }
+}
+
+function pool(...pool) {
+    return new XPool(...pool)
+}
+
+function pooledModel(model, pool) {
+    let m = valueModel()
+    model.onChange(e => m.set(e.value ? pool.acquire() : pool.release(m.get())))
+    return transform(value => value.value, m)
 }
