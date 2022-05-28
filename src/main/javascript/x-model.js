@@ -105,7 +105,7 @@ function operatorBuilder(fast) {
                 return fast
         return !fast
     }
-    model.addOperand = function (operandModel) {
+    model.operand = function (operandModel) {
         let i = args.length
         args.push(operandModel.get())
         operandModel.onChange(event => { args[i] = operandModel.get(); model.set(f(args)) })
@@ -163,6 +163,8 @@ class XList extends XProducer {
 
 class XPool {
     constructor(...pool) {
+        this.cycle = true
+        this.size = pool.length
         this.items = pool
         this.indexes = []
         for(let i = 0; i < this.items.length; i++)
@@ -170,8 +172,13 @@ class XPool {
     }
 
     acquire() {
+        if(this.indexes.length === 0)
+            if(this.cycle)
+                this.indexes.push(this.size++)
+            else
+                return {value: null}
         return {
-            value: this.items[this.indexes[0]],
+            value: this.items[this.indexes[0] % this.items.length],
             index: this.indexes.shift(),
         }
     }

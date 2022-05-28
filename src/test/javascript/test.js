@@ -2,7 +2,7 @@
 let model = enabledValueModel()
 let items = producer()
 let aModel = booleanModel()
-let andModel = andOperatorBuilder().addOperand(model).addOperand(aModel)
+let andModel = andOperatorBuilder().operand(model).operand(aModel)
 
 let colorPool = pool("yellow", "red", "green")
 let c1 = booleanModel()
