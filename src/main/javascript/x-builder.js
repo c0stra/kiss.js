@@ -55,9 +55,7 @@ function x(parameter) {
 
 function valueView(value) {
     var builder = xText(document.createTextNode(value.get()))
-    value.onChange(function(event) {
-        builder.setValue(event.value)
-    }, false)
+    value.onChange(event => builder.setValue(event.value), false)
     return builder
 }
 

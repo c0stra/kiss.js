@@ -96,6 +96,31 @@ function enabledValueModel(enabled = false, initialValue = false) {
     return new XEnabledValue(enabled, initialValue)
 }
 
+function operatorBuilder(fast) {
+    let args = []
+    let model = booleanModel(fast)
+    function f(operands) {
+        for (let i = 0; i < operands.length; i++)
+            if(operands[i] === fast)
+                return fast
+        return !fast
+    }
+    model.addOperand = function (operandModel) {
+        let i = args.length
+        args.push(operandModel.get())
+        operandModel.onChange(event => { args[i] = operandModel.get(); model.set(f(args)) })
+        return this
+    }
+    return model
+}
+
+function andOperatorBuilder() {
+    return operatorBuilder(false)
+}
+
+function orOperatorBuilder() {
+    return operatorBuilder(true)
+}
 
 class XProducer {
     constructor() {
@@ -115,4 +140,22 @@ class XProducer {
 
 function producer() {
     return new XProducer()
+}
+
+
+class XList extends XProducer {
+    constructor() {
+        super();
+        this.itrems = []
+    }
+
+    add(item) {
+        this.items.push(item)
+        return super.add(item);
+    }
+
+    remove(item) {
+        this.items.remove(this.items.indexOf(item))
+    }
+
 }

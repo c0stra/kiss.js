@@ -31,19 +31,19 @@ function apply(processor) {
             request.onreadystatechange = function () {
                 if(request.readyState === request.DONE && SUCCESS_STATUSES.has(request.status)) {
                     if(request.responseXML)
-                        processor(request.responseXML, ...args)
+                        process(request.responseXML, ...args)
                 }
             }
         },
 
         onChildrenOf(node, ...args) {
             for(let child = node.firstChild; child; child = child.nextSibling)
-                processor(child, ...args)
+                process(child, ...args)
         },
 
         onAttributesOf(node, ...args) {
             for(let i = 0; i < node.attributes.length; i++)
-                processor(node.attributes[i], ...args)
+                process(node.attributes[i], ...args)
         }
     }
 }
