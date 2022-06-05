@@ -28,3 +28,18 @@ items.add("Item 2")
 items.add("Item 3")
 
 setTimeout(e => model.enabled.set(true), 2000)
+
+let c = pre()
+
+apply(function rule(node, prefix) {
+
+    c.add(prefix + tagOf(node) + '\n')
+    if(tagOf(node) === 'HEAD') {
+        apply(rule).by(2).onProgress(event => alert(event.value)).onChildrenOf(node, '\t' + prefix)
+    } else {
+        apply(rule).onChildrenOf(node, '\t' + prefix)
+    }
+
+}).onChildrenOf(document, '+- ')
+
+body().add(c)
