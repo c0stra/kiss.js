@@ -34,7 +34,7 @@ function apply(processor) {
 
     function batch(generator, delay) {
         if(!generator.next().done)
-            setTimeout(() => batch(generator), delay)
+            setTimeout(() => batch(generator, delay), delay)
     }
 
     return {
@@ -69,7 +69,7 @@ function apply(processor) {
         },
 
         onChildrenOf(node, ...args) {
-            batch(chunks(node, this.batchSize, this.totalCount, this.doneCount, ...args), this.delay)
+            batch(chunks(node, this.batchSize, this.totalCount, this.doneCount, ...args), this.batchDelay)
         },
 
         onAttributesOf(node, ...args) {
@@ -88,8 +88,18 @@ function apply(processor) {
             return this
         },
 
+        useTotalModel(model) {
+            this.totalCount = model
+            return this
+        },
+
         onProgress(handler) {
             this.doneCount.onChange(handler)
+            return this
+        },
+
+        useProgressModel(model) {
+            this.doneCount = model
             return this
         }
 

@@ -208,8 +208,24 @@ class XBuilder extends XNode {
         return this.css('right', X(value, unit))
     }
 
+    resize(value) {
+        return this.css('resize', value)
+    }
+
     color(value) {
         return this.css('color', value)
+    }
+
+    fontSize(...args) {
+        return this.css('font-size', ...args)
+    }
+
+    fontStyle(...args) {
+        return this.css('font-style', ...args)
+    }
+
+    fontWeight(...args) {
+        return this.css('font-weight', ...args)
     }
 
     display(value) {
@@ -220,12 +236,28 @@ class XBuilder extends XNode {
         return this.css('visibility', value)
     }
 
-    opacity(value) {
-        return this.css('opacity', value)
+    opacity(...args) {
+        return this.css('opacity', ...args)
     }
 
     backgroundColor(value) {
         return this.css('background-color', value)
+    }
+
+    backgroundImage(...args) {
+        return this.css('background-image', ...args)
+    }
+
+    backgroundRepeat(...args) {
+        return this.css('background-repeat', ...args)
+    }
+
+    backgroundSize(...args) {
+        return this.backgroundRepeat('no-repeat').css('background-size', ...args)
+    }
+
+    linearGradient(value) {
+        return this.backgroundImage('linear-gradient(', value, ')')
     }
 
     position(value) {

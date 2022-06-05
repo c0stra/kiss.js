@@ -10,6 +10,11 @@ let c2 = booleanModel()
 let c3 = booleanModel()
 let c4 = booleanModel()
 
+let size = valueModel(0)
+let loaded = valueModel(0)
+let total = valueModel(0)
+let processed = valueModel(0)
+
 body().add(
     div().title(X('a ', mapBooleanModel(model, 'X', 'Y'), ' x')).add('Click').onClick(toggle(model)),
     expander(model), //.color(mapBooleanModel(enabled, null, 'silver')),
@@ -20,7 +25,9 @@ body().add(
     span().add("c1").backgroundColor(pooledModel(c1, colorPool)).onClick(toggle(c1)), " ",
     span().add("c2").backgroundColor(pooledModel(c2, colorPool)).onClick(toggle(c2)), " ",
     span().add("c3").backgroundColor(pooledModel(c3, colorPool)).onClick(toggle(c3)), " ",
-    span().add("c4").backgroundColor(pooledModel(c4, colorPool)).onClick(toggle(c4)), " "
+    span().add("c4").backgroundColor(pooledModel(c4, colorPool)).onClick(toggle(c4)), " ",
+    progressBar(loaded, size).add(loaded, ' / ', size, ' loaded'),
+    progressBar(processed, total).add(processed, ' of ', total, ' elements processed')
 )
 
 items.add("Item 1")
@@ -38,12 +45,12 @@ apply(function rule(node, prefix) {
         c.add(' ' + attr.nodeName)
     }).onAttributesOf(node)
     c.add('\n')
-    if(tagOf(node) === 'HEAD') {
-        apply(rule).by(2).onProgress(event => alert(event.value)).onChildrenOf(node, '\t' + prefix)
+    if(tagOf(node) === 'data') {
+        apply(rule).by(1, 200).useTotalModel(total).useProgressModel(processed).onChildrenOf(node, '\t' + prefix)
     } else {
         apply(rule).onChildrenOf(node, '\t' + prefix)
     }
 
-}).onTotal(e => alert("Total: " + e.value)).onProgress(e=> alert("Loaded: " + e.value)).onDocument("https://cdn.jsdelivr.net/gh/c0stra/kiss.js@main/src/test/resources/test.xml", '+- ')
+}).useTotalModel(size).useProgressModel(loaded).onDocument("https://cdn.jsdelivr.net/gh/c0stra/kiss.js@main/src/test/resources/test.xml", '+- ')
 
 body().add(c)

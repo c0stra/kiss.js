@@ -14,3 +14,7 @@ function hbar(valueModel, className) {
 function vbar(valueModel, className) {
     return div(className || 'progress').position('absolute').bottom(0).left(0).width(100, '%').height(valueModel, '%')
 }
+
+function progressBar(done, total, className = 'progress-bar') {
+    return div(className).backgroundSize(functionModel((d, t) => ((t > 0) ? 100 * d / t : 0), done, total), '%')
+}

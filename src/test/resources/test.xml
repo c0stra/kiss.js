@@ -3,4 +3,28 @@
         <field name="A">Value1</field>
         <field name="B">Value2</field>
     </object>
+    <object id="2">
+        <field name="A">Value1</field>
+        <field name="B">Value2</field>
+    </object>
+    <object id="3">
+        <field name="A">Value1</field>
+        <field name="B">Value2</field>
+    </object>
+    <object id="4">
+        <field name="A">Value1</field>
+        <field name="B">Value2</field>
+    </object>
+    <object id="5">
+        <field name="A">Value1</field>
+        <field name="B">Value2</field>
+    </object>
+    <object id="6">
+        <field name="A">Value1</field>
+        <field name="B">Value2</field>
+    </object>
+    <object id="7">
+        <field name="A">Value1</field>
+        <field name="B">Value2</field>
+    </object>
 </data>
