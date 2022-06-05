@@ -44,6 +44,6 @@ apply(function rule(node, prefix) {
         apply(rule).onChildrenOf(node, '\t' + prefix)
     }
 
-}).onChildrenOf(document, '+- ')
+}).onTotal(e => alert("Total: " + e.value)).onProgress(e=> alert("Loaded: " + e.value)).onDocument("https://cdn.jsdelivr.net/gh/c0stra/kiss.js@main/src/test/resources/test.xml", '+- ')
 
 body().add(c)

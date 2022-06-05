@@ -54,6 +54,12 @@ function apply(processor) {
         },
 
         onRequest(request, ...args) {
+            request.onprogress = event => {
+                if(event.lengthComputable) {
+                    this.totalCount.set(event.total)
+                }
+                this.doneCount.set(event.loaded)
+            }
             request.onreadystatechange = function () {
                 if(request.readyState === request.DONE && SUCCESS_STATUSES.has(request.status)) {
                     if(request.responseXML)
