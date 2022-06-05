@@ -33,7 +33,11 @@ let c = pre()
 
 apply(function rule(node, prefix) {
 
-    c.add(prefix + tagOf(node) + '\n')
+    c.add(prefix + tagOf(node) + ' ')
+    apply(attr => {
+        c.add(' ' + attr.nodeName)
+    }).onAttributesOf(node)
+    c.add('\n')
     if(tagOf(node) === 'HEAD') {
         apply(rule).by(2).onProgress(event => alert(event.value)).onChildrenOf(node, '\t' + prefix)
     } else {

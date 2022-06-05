@@ -67,7 +67,7 @@ function apply(processor) {
         },
 
         onAttributesOf(node, ...args) {
-            for(let i = 0; i < node.attributes.length; i++)
+            if(node.attributes) for(let i = 0; i < node.attributes.length; i++)
                 process(node.attributes[i], ...args)
         },
 
