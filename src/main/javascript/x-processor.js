@@ -73,6 +73,7 @@ function apply(processor) {
 
         by(batchSize, delay = 0) {
             this.batchSize = batchSize
+            this.batchDelay = delay
             return this
         },
 
