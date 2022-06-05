@@ -38,7 +38,7 @@ function apply(processor) {
     }
 
     return {
-        batchSize: -1,
+        batchSize: 0,
 
         totalCount: valueModel(0),
 
@@ -47,6 +47,16 @@ function apply(processor) {
         batchDelay: 0,
 
         onDocument(uri, ...args) {
+            apply((r, ...a) => {
+                if(r.responseXML)
+                    processor(r.responseXML, ...a)
+            }).by(this.batchSize, this.batchDelay)
+              .useTotalModel(this.totalCount)
+              .useProgressModel(this.doneCount)
+              .onGetRequest(uri, ...args)
+        },
+
+        onGetRequest(uri, ...args) {
             let request = new XMLHttpRequest()
             request.open('GET', uri, true)
             this.onRequest(request, ...args)
@@ -55,15 +65,13 @@ function apply(processor) {
 
         onRequest(request, ...args) {
             request.onprogress = event => {
-                if(event.lengthComputable) {
+                if(event.lengthComputable)
                     this.totalCount.set(event.total)
-                }
                 this.doneCount.set(event.loaded)
             }
             request.onreadystatechange = function () {
                 if(request.readyState === request.DONE && SUCCESS_STATUSES.has(request.status)) {
-                    if(request.responseXML)
-                        process(request.responseXML, ...args)
+                    process(request, ...args)
                 }
             }
         },
