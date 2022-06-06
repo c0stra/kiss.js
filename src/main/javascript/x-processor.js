@@ -46,10 +46,14 @@ function apply(processor) {
 
         batchDelay: 0,
 
+        onerror: apply.onerror,
+
         onDocument(uri, ...args) {
             apply((r, ...a) => {
                 if(r.responseXML)
                     processor(r.responseXML, ...a)
+                else
+                    this.onerror(new Error('No XML response received for: ' + uri + '.\n\nContent:\n' + r.responseText))
             }).by(this.batchSize, this.batchDelay)
               .useTotalModel(this.totalCount)
               .useProgressModel(this.doneCount)
@@ -69,9 +73,12 @@ function apply(processor) {
                     this.totalCount.set(event.total)
                 this.doneCount.set(event.loaded)
             }
-            request.onreadystatechange = function () {
-                if(request.readyState === request.DONE && SUCCESS_STATUSES.has(request.status)) {
-                    process(request, ...args)
+            request.onreadystatechange = () => {
+                if(request.readyState === request.DONE) {
+                    if(SUCCESS_STATUSES.has(request.status))
+                        process(request, ...args)
+                    else
+                        this.onerror(new Error('Request failed: ' + request.status + ' ' + request.statusText + '\n\n' + request.responseText))
                 }
             }
         },

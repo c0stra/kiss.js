@@ -1,9 +1,7 @@
 
 function expander(model) {
     let e = span().display('inline-block').cursor('pointer').transition('transform .2s ease-in-out').transform(optional(model, 'rotate(90deg)')).add('▶').onClick(toggle(model))
-    if(model instanceof XEnabledValue) {
-        e.color(mapBooleanModel(model.enabled, null, 'silver'))
-    }
+    if(model instanceof XEnabledValue) e.color(mapBooleanModel(model.enabled, null, 'silver'))
     return e
 }
 

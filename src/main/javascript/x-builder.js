@@ -52,7 +52,7 @@ function x(parameter) {
 }
 
 function valueView(value) {
-    var builder = xText(document.createTextNode(value.get()))
+    let builder = xText(document.createTextNode(value.get()))
     value.onChange(event => builder.setValue(event.value), false)
     return builder
 }
@@ -182,6 +182,22 @@ class XBuilder extends XNode {
         if(value instanceof XValue) value.onChange(css)
         else css({value: value})
         return this
+    }
+
+    textAlign(value) {
+        return this.css('text-align', value)
+    }
+
+    textLeft() {
+        return this.textAlign('left')
+    }
+
+    textRight() {
+        return this.textAlign('right')
+    }
+
+    textCenter() {
+        return this.textAlign('center')
     }
 
     width(value, unit = 'px') {
@@ -340,6 +356,10 @@ class XBuilder extends XNode {
 
     onReset(handler, bubble) {
         return this.on('reset', handler, bubble)
+    }
+
+    onInput(handler, bubble) {
+        return this.on('input', handler, bubble)
     }
 
 }
