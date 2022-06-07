@@ -27,7 +27,8 @@ body().add(
     span().add("c3").backgroundColor(pooledModel(c3, colorPool)).onClick(toggle(c3)), " ",
     span().add("c4").backgroundColor(pooledModel(c4, colorPool)).onClick(toggle(c4)), " ",
     progressBar(loaded, size).add(loaded, ' / ', size, ' loaded'),
-    progressBar(processed, total).add(processed, ' of ', total, ' elements processed')
+    progressBar(processed, total).add(processed, ' of ', total, ' elements processed'),
+    buildView(model, () => div().add('Hello'))
 )
 
 items.add("Item 1")

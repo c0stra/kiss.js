@@ -594,12 +594,21 @@ function ins() {
     return element('ins')
 }
 
-function fragment() {
-    return builder(document.createDocumentFragment())
+function fragment(...args) {
+    return builder(document.createDocumentFragment()).add(...args)
 }
 
 
 function each(iterator, itemView = item => item, boundary = xText('')) {
     iterator.onNext(item => boundary.prepend(itemView(item.value)))
-    return fragment().add(boundary)
+    return fragment(boundary)
+}
+
+function buildView(model, builder, boundary = xText("")) {
+    let b
+    model.onChange(event => {
+        if(event.value) boundary.prepend(b = builder())
+        else if(b) b.remove()
+    })
+    return fragment(boundary)
 }
