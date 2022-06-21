@@ -4,8 +4,7 @@ class XSignal {
     }
 
     fire(event) {
-        for (let i = 0; i < this.handlers.length; i++)
-            this.handlers[i](event)
+        for (let i = 0; i < this.handlers.length; i++) this.handlers[i](event)
     }
 
     add(handler) {
@@ -25,8 +24,7 @@ class XValue {
     }
 
     set(newValue) {
-        if(this.value !== newValue)
-            this.signal.fire({oldValue: this.value, value: this.value = newValue})
+        if(this.value !== newValue) this.signal.fire({oldValue: this.value, value: this.value = newValue})
         return this
     }
 

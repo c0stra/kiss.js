@@ -7,7 +7,8 @@ function set(model, value) {
     return () => model.set(value)
 }
 
-function copyToClipboard(node) {
+function copyToClipboard(nodeOrBuilder) {
+    let node = nodeOrBuilder instanceof XNode ? nodeOrBuilder.get() : nodeOrBuilder
     return function(event) {
         if(document.selection) {
             let ieRange = document.body.createTextRange()
