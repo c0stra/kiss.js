@@ -267,6 +267,8 @@ function details() {return element('details')}
 function summary() {return element('summary')}
 function del() {return element('del')}
 function ins() {return element('ins')}
+function hr() {return element('hr')}
+function br() {return element('br')}
 function fragment(...args) {return builder(document.createDocumentFragment()).add(...args)}
 
 function each(iterator, itemView = item => item, boundary = xText('')) {
