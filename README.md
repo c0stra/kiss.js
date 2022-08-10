@@ -61,4 +61,24 @@ css style property `display`, but in this example it
 accepts directly the boolean model, so if it's `false`,
 the element wont be visible.
 
+Builder methods for attributes and style properties
+accept vararg parameters. If more arguments provided,
+the meaning is - model function to concatenate the
+arguments.
+This brings a powerful feature, when one wants to
+dynamically control part of the value.
+Typical usecase is to switch or toggle a css class,
+but at the same time keep others unchanged.
+
+Example:
+```
+let toggleClass = booleanModel()
+
+body().add(
+    div().setClass('fixed', mapBooleanModel(toggleClass, ' on')).add('Some text')
+)
+```
+This code will toggle the class `on`, so it will be there, or not.
+If the mapping receives one more argumen, it will switch
+between them.
 
