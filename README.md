@@ -40,6 +40,7 @@ fluent builders.
 The power is in connection of the builders with
 models very easilly.
 
+## Examples
 Exanple of simple updatable value:
 ```
 let model = textModel('Initializing')
