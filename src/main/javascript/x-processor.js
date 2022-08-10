@@ -53,7 +53,7 @@ function apply(processor) {
                 if(r.responseXML)
                     processor(r.responseXML, ...a)
                 else
-                    this.onerror(new Error('No XML response received for: ' + uri + '.\n\nContent:\n' + r.responseText))
+                    this.onerror(new Error('No XML response received for: ' + uri), r)
             }).by(this.batchSize, this.batchDelay)
               .useTotalModel(this.totalCount)
               .useProgressModel(this.doneCount)
