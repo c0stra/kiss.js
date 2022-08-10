@@ -50,6 +50,15 @@ Immediately, on change of the value in model by
 
 Example of control of hideable element:
 ```
-
+let displayToggle = booleanModel() // default initual value is `false`
+body().add(
+    div().add('Click for details').onClick(toggle(disolayToggle)),
+    div().add('Detail hiddeable').display(displayToggle)
+)
 ```
+The html builder method `display()` normally sets the
+css style property `display`, but in this example it
+accepts directly the boolean model, so if it's `false`,
+the element wont be visible.
+
 
