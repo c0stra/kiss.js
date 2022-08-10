@@ -269,6 +269,7 @@ function del() {return element('del')}
 function ins() {return element('ins')}
 function hr() {return element('hr')}
 function br() {return element('br')}
+function iframe(...src) {return element('iframe').src(src)}
 function fragment(...args) {return builder(document.createDocumentFragment()).add(...args)}
 
 function each(iterator, itemView = item => item, boundary = xText('')) {
