@@ -242,7 +242,7 @@ function textarea(name) {return element('textarea').name(name)}
 function input(type, name) {return element('input').type(type).name(name)}
 function inputText(name) {return input('text', name)}
 function password(name) {return input('password', name)}
-function checkbox(name, checked) {return input('checkbox', name)}
+function checkbox(name) {return input('checkbox', name)}
 function submit(value) {return input('submit').value(value)}
 function reset(value) {return input('reset').value(value)}
 function select(name) {return element('select').name(name)}
@@ -284,4 +284,14 @@ function buildView(model, builder, boundary = xText("")) {
         else if(b) b.remove()
     })
     return fragment(boundary)
+}
+
+function args(array, transformation) {
+    let transformed = new Array(array.length)
+    for(let i = 0; i < array.length; i++) transformed[i] = transformation(array[i], i)
+    return transformed
+}
+
+function iterate(array, consumer) {
+    for(let i = 0; i < array.length; i++) consumer(array[i], i)
 }

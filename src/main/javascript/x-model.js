@@ -23,8 +23,8 @@ class XValue {
         return this.value
     }
 
-    set(newValue) {
-        if(this.value !== newValue) this.signal.fire({oldValue: this.value, value: this.value = newValue})
+    set(newValue, forceFire = false) {
+        if(this.value !== newValue || forceFire) this.signal.fire({oldValue: this.value, value: this.value = newValue})
         return this
     }
 
@@ -106,7 +106,7 @@ function operatorBuilder(fast) {
     model.operand = function (operandModel) {
         let i = args.length
         args.push(operandModel.get())
-        operandModel.onChange(event => { args[i] = operandModel.get(); model.set(f(args)) })
+        operandModel.onChange(() => { args[i] = operandModel.get(); model.set(f(args)) })
         return this
     }
     return model
@@ -142,22 +142,33 @@ function producer() {
 
 
 class XList extends XProducer {
-    constructor() {
+    constructor(initial) {
         super();
-        this.itrems = []
+        this.items = []
+        this.changeSignal = new XSignal()
+        if(initial) iterate(initial, i => this.add(i))
     }
 
     add(item) {
         this.items.push(item)
+        this.changeSignal.fire({value: this.items})
         return super.add(item);
     }
 
     remove(item) {
         this.items.remove(this.items.indexOf(item))
+        this.changeSignal.fire({value: this.items})
     }
 
+    onChange(handler, initialize = true) {
+        this.changeSignal.add(handler)
+        if(initialize) handler({value: this.value})
+    }
 }
 
+function listModel(array) {
+    return new XList(array)
+}
 
 class XPool {
     constructor(...pool) {
