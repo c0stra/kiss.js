@@ -126,6 +126,8 @@ class XBuilder extends XNode {
     alt(...value) {return this.set('alt', ...value)}
     draggable(...value) {return this.set('draggable', ...value)}
     rel(...value) {return this.set('rel', ...value)}
+    colspan(...value) {return this.set('colspan', ...value)}
+    rowspan(...value) {return this.set('rowspan', ...value)}
 
     /*
       Manipulation of Element style properties
