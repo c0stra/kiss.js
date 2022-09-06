@@ -164,6 +164,12 @@ class XList extends XProducer {
         this.changeSignal.add(handler)
         if(initialize) handler({value: this.value})
     }
+
+    onNext(handler, initialize = true) {
+        super.onNext(handler);
+        if(initialize) this.items.forEach(item => handler({value: item}))
+    }
+
 }
 
 function listModel(array) {

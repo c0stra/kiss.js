@@ -15,6 +15,11 @@ let loaded = valueModel(0)
 let total = valueModel(0)
 let processed = valueModel(0)
 
+let inputModel = valueModel('input test')
+let textareaModel = valueModel('textarea test')
+
+let list = listModel(['a', 'b', 'c'])
+
 body().add(
     div().title(X('a ', mapBooleanModel(model, 'X', 'Y'), ' x')).add('Click').onClick(toggle(model)),
     expander(model), //.color(mapBooleanModel(enabled, null, 'silver')),
@@ -28,7 +33,12 @@ body().add(
     span().add("c4").backgroundColor(pooledModel(c4, colorPool)).onClick(toggle(c4)), " ",
     progressBar(loaded, size).add(loaded, ' / ', size, ' loaded'),
     progressBar(processed, total).add(processed, ' of ', total, ' elements processed'),
-    buildView(model, () => div().add('Hello'))
+    buildView(model, () => div().add('Hello')),
+    inputText('X').model(inputModel), br(),
+    inputModel, br(),
+    textarea('y').model(textareaModel), br(),
+    textareaModel, br(),
+    each(list, c => div().add(c))
 )
 
 items.add("Item 1")

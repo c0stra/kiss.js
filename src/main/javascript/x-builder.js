@@ -128,6 +128,7 @@ class XBuilder extends XNode {
     rel(...value) {return this.set('rel', ...value)}
     colspan(...value) {return this.set('colspan', ...value)}
     rowspan(...value) {return this.set('rowspan', ...value)}
+    autocomplete(...value) {return this.set('autocomplete', ...value)}
 
     /*
       Manipulation of Element style properties
@@ -203,6 +204,13 @@ class XBuilder extends XNode {
     onSubmit(handler, bubble) {return this.on('submit', handler, bubble)}
     onReset(handler, bubble) {return this.on('reset', handler, bubble)}
     onInput(handler, bubble) {return this.on('input', handler, bubble)}
+    onChange(handler, bubble) {return this.on('change', handler, bubble)}
+
+    /*
+     Special binding
+     */
+    model(model) {return (this.get().nodeName === 'TEXTAREA' ? this.add(model) : this.value(model)).onChange(() => model.set(this.get().value))}
+
 }
 
 function builder(node) {
@@ -275,8 +283,9 @@ function iframe(...src) {return element('iframe').src(src)}
 function fragment(...args) {return builder(document.createDocumentFragment()).add(...args)}
 
 function each(iterator, itemView = item => item, boundary = xText('')) {
+    let f = fragment(boundary)
     iterator.onNext(item => boundary.prepend(itemView(item.value)))
-    return fragment(boundary)
+    return f
 }
 
 function buildView(model, builder, boundary = xText("")) {
