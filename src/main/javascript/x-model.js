@@ -162,7 +162,7 @@ class XList extends XProducer {
 
     onChange(handler, initialize = true) {
         this.changeSignal.add(handler)
-        if(initialize) handler({value: this.value})
+        if(initialize) handler({value: this.items})
     }
 
     onNext(handler, initialize = true) {

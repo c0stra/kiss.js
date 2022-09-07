@@ -75,7 +75,8 @@ class XBuilder extends XNode {
      */
     add(...args) {
         for(let i = 0; i < args.length; i++)
-            this.node.appendChild(x(args[i]).get())
+            if(args[i] !== null && args[i] !== undefined)
+                this.node.appendChild(x(args[i]).get())
         return this
     }
 

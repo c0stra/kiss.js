@@ -20,6 +20,8 @@ let textareaModel = valueModel('textarea test')
 
 let list = listModel(['a', 'b', 'c'])
 
+let obj = {}
+
 body().add(
     div().title(X('a ', mapBooleanModel(model, 'X', 'Y'), ' x')).add('Click').onClick(toggle(model)),
     expander(model), //.color(mapBooleanModel(enabled, null, 'silver')),
@@ -37,7 +39,7 @@ body().add(
     inputText('X').model(inputModel), br(),
     inputModel, br(),
     textarea('y').model(textareaModel), br(),
-    textareaModel, br(),
+    textareaModel, br(), div().add('e: ', obj.e),
     each(list, c => div().add(c))
 )
 
