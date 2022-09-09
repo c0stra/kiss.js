@@ -42,6 +42,10 @@ class XTransfer {
 
 }
 
+function transfer() {
+    return new XTransfer()
+}
+
 class XValue {
     constructor(initialValue) {
         this.value = initialValue
