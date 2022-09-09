@@ -207,8 +207,19 @@ class XBuilder extends XNode {
     onInput(handler, bubble) {return this.on('input', handler, bubble)}
     onChange(handler, bubble) {return this.on('change', handler, bubble)}
 
-    onDrag(handler) {return this.draggable(true).on('dragstart', handler, true)}
-    onDrop(handler) {return this}
+    onDragstart(handler) {return this.on('dragstart', handler, true)}
+    onDrop(handler) {return this.on('drop', handler, true)}
+    onDragend(handler) {return this.on('dragend', handler, true)}
+    onDragover(handler) {return this.on('dragover', handler, true)}
+
+    transfer(channel, data) {
+        return this.draggable(true).onDragstart(channel.drag(data)).onDragend(channel.end())
+    }
+
+    receive(channel, action) {
+        return this.onDragover(channel.allow()).onDrop(channel.drop(action))
+    }
+
 
     /*
      Special binding
