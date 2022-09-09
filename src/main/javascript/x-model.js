@@ -13,6 +13,35 @@ class XSignal {
 }
 
 
+class XTransfer {
+    constructor() {
+        this.data = null;
+    }
+
+    drag(data) {
+        () => this.data = data
+    }
+
+    allow() {
+        event => {
+            if(this.data != null)
+                event.preventDefault()
+        }
+    }
+
+    drop(f) {
+        () => {
+            if(this.data != null)
+                f(this.data)
+        }
+    }
+
+    end() {
+        () => this.data = null
+    }
+
+}
+
 class XValue {
     constructor(initialValue) {
         this.value = initialValue
