@@ -26,7 +26,7 @@ let obj = {}
 
 body().add(
     div().title(X('a ', mapBooleanModel(model, 'X', 'Y'), ' x')).add('Click').onClick(toggle(model)),
-    expander(model), //.color(mapBooleanModel(enabled, null, 'silver')),
+    expander(model),
     div().display(model).add('Hidden element'),
     each(items, item => div('item').add(item)),
     div().add('A').onClick(toggle(aModel)),
@@ -54,6 +54,10 @@ items.add("Item 3")
 setTimeout(e => model.enabled.set(true), 2000)
 
 let c = pre()
+
+list.remove('a')
+
+load(list).from('data.json')
 
 apply(function rule(node, prefix) {
 
