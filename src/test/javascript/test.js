@@ -20,6 +20,8 @@ let textareaModel = valueModel('textarea test')
 
 let list = listModel(['a', 'b', 'c'])
 
+let slot = transfer()
+
 let obj = {}
 
 body().add(
@@ -40,7 +42,9 @@ body().add(
     inputModel, br(),
     textarea('y').model(textareaModel), br(),
     textareaModel, br(), div().add('e: ', obj.e),
-    each(list, c => div().add(c))
+    each(list, c => div().add(c)),
+    span().add('Drag me').transfer(slot, 'A'),
+    span().add('Drop here').receive(slot, data => alert(data))
 )
 
 items.add("Item 1")
