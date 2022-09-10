@@ -19,25 +19,25 @@ class XTransfer {
     }
 
     drag(data) {
-        () => this.data = data
+        return () => this.data = data
     }
 
     allow() {
-        event => {
+        return event => {
             if(this.data != null)
                 event.preventDefault()
         }
     }
 
     drop(f) {
-        () => {
+        return () => {
             if(this.data != null)
                 f(this.data)
         }
     }
 
     end() {
-        () => this.data = null
+        return () => this.data = null
     }
 
 }
