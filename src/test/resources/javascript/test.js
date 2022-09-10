@@ -56,8 +56,10 @@ setTimeout(e => model.enabled.set(true), 2000)
 let c = pre()
 
 list.remove('a')
+let source = textModel('data')
+load(list).from(source,'.json').every(1000)
 
-load(list).from('data.json')
+setTimeout(() => source.set('data2'), 2000)
 
 apply(function rule(node, prefix) {
 
