@@ -125,3 +125,22 @@ function apply(processor) {
 apply.onerror = function(error) {
     throw error
 }
+
+
+
+function load(model) {
+    return {
+        from(...uri) {
+            let uriModel = X(...uri)
+            if(!(uriModel instanceof XValue))
+                uriModel = valueModel(uriModel)
+            let f = () => apply(request => model.set(JSON.parse(request.responseText))).onGetRequest(uriModel.get())
+            f()
+            return {
+                every(millis) {
+                    setInterval(f, millis)
+                }
+            }
+        }
+    }
+}

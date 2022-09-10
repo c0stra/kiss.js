@@ -259,20 +259,3 @@ function pooledModel(model, pool) {
     model.onChange(e => m.set(e.value ? pool.acquire() : pool.release(m.get())))
     return transform(value => value.value, m)
 }
-
-function load(model) {
-    return {
-        from(...uri) {
-            let uriModel = X(...uri)
-            if(!(uriModel instanceof XValue))
-                uriModel = valueModel(uriModel)
-            let f = () => apply(request => model.set(JSON.parse(request.responseText))).onGetRequest(uriModel.get())
-            f()
-            return {
-                every(millis) {
-                    setInterval(f, millis)
-                }
-            }
-        }
-    }
-}
