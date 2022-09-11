@@ -135,7 +135,7 @@ function load(model) {
             if(!(uriModel instanceof XValue))
                 uriModel = valueModel(uriModel)
             let f = () => apply(request => model.set(JSON.parse(request.responseText))).onGetRequest(uriModel.get())
-            f()
+            uriModel.onChange(f)
             return {
                 every(millis) {
                     setInterval(f, millis)
