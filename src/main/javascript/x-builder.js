@@ -130,6 +130,8 @@ class XBuilder extends XNode {
     colspan(...value) {return this.set('colspan', ...value)}
     rowspan(...value) {return this.set('rowspan', ...value)}
     autocomplete(...value) {return this.set('autocomplete', ...value)}
+    checked(value) {return this.set('checked', value)}
+    disabled(value) {return this.set('disabled', mapBooleanModel(value, true))}
 
     /*
       Manipulation of Element style properties
