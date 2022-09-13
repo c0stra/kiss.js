@@ -270,6 +270,7 @@ function input(type, name) {return element('input').type(type).name(name)}
 function inputText(name) {return input('text', name)}
 function password(name) {return input('password', name)}
 function checkbox(name) {return input('checkbox', name)}
+function radio(name) {return input('radio', name)}
 function submit(value) {return input('submit').value(value)}
 function reset(value) {return input('reset').value(value)}
 function select(name) {return element('select').name(name)}
