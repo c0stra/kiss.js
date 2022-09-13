@@ -128,7 +128,7 @@ apply.onerror = function(error) {
 
 
 
-function load(model) {
+function populate(model) {
     return {
         from(...uri) {
             let uriModel = X(...uri)
@@ -139,6 +139,10 @@ function load(model) {
             return {
                 every(millis) {
                     setInterval(f, millis)
+                    return this
+                },
+                model() {
+                    return model
                 }
             }
         }
