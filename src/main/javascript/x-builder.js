@@ -216,11 +216,11 @@ class XBuilder extends XNode {
     onDragleave(handler) {return this.on('dragleave' handler, true)}
 
     transfer(channel, data) {
-        return this.draggable(true).cursor('grab').onDragstart(channel.drag(data)).onDragend(channel.end())
+        return this.draggable(true).cursor('grab').onDragstart(set(channel, data)).onDragend(set(channel, null))
     }
 
     receive(channel, action) {
-        return this.onDragover(channel.allow()).onDrop(channel.drop(action))
+        return this.onDragover(e => null !== channel.get() && e.preventDefault()).onDrop(() => null != channel.get() && action(channel.get()))
     }
 
 
