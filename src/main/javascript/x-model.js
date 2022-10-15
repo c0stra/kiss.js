@@ -12,41 +12,6 @@ class XSignal {
     }
 }
 
-
-class XTransfer {
-    constructor() {
-        this.data = valueModel()
-        this.targetModel = this.data
-    }
-
-    setTargetModel(model) {
-        this.targetModel = model
-    }
-
-    drag(data) {
-        return () => this.data.set(data)
-    }
-
-    allow() {
-        return event => {
-            if(this.data.get() != null)
-                event.preventDefault()
-        }
-    }
-
-    drop(f) {
-        return () => {
-            if(this.data.get() != null)
-                f(this.data.get())
-        }
-    }
-
-    end() {
-        return () => this.data.set(null)
-    }
-
-}
-
 function transfer() {
     return valueModel()
 }

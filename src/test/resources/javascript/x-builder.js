@@ -130,6 +130,8 @@ class XBuilder extends XNode {
     colspan(...value) {return this.set('colspan', ...value)}
     rowspan(...value) {return this.set('rowspan', ...value)}
     autocomplete(...value) {return this.set('autocomplete', ...value)}
+    checked(value) {return this.set('checked', value)}
+    disabled(value) {return this.set('disabled', value instanceof XValue ? mapBooleanModel(value, true) : value)}
 
     /*
       Manipulation of Element style properties
@@ -211,13 +213,14 @@ class XBuilder extends XNode {
     onDrop(handler) {return this.on('drop', handler, true)}
     onDragend(handler) {return this.on('dragend', handler, true)}
     onDragover(handler) {return this.on('dragover', handler, true)}
+    onDragleave(handler) {return this.on('dragleave', handler, true)}
 
     transfer(channel, data) {
-        return this.draggable(true).onDragstart(channel.drag(data)).onDragend(channel.end())
+        return this.draggable(true).cursor('grab').onDragstart(set(channel, data)).onDragend(set(channel, null))
     }
 
     receive(channel, action) {
-        return this.onDragover(channel.allow()).onDrop(channel.drop(action))
+        return this.onDragover(e => null !== channel.get() && e.preventDefault()).onDrop(() => null != channel.get() && action(channel.get()))
     }
 
 
@@ -268,6 +271,7 @@ function input(type, name) {return element('input').type(type).name(name)}
 function inputText(name) {return input('text', name)}
 function password(name) {return input('password', name)}
 function checkbox(name) {return input('checkbox', name)}
+function radio(name) {return input('radio', name)}
 function submit(value) {return input('submit').value(value)}
 function reset(value) {return input('reset').value(value)}
 function select(name) {return element('select').name(name)}

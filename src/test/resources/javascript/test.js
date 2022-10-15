@@ -44,7 +44,7 @@ body().add(
     textareaModel, br(), div().add('e: ', obj.e),
     each(list, c => div().add(c)),
     span().add('Drag me').transfer(slot, 'A'),
-    span().add('Drop here').receive(slot, data => alert(data))
+    span(mapBooleanModel(slot, "receiver")).add('Drop here').receive(slot, data => alert(data))
 )
 
 items.add("Item 1")
