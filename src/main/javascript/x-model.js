@@ -15,29 +15,29 @@ class XSignal {
 
 class XTransfer {
     constructor() {
-        this.data = null;
+        this.data = valueModel(null)
     }
 
     drag(data) {
-        return () => this.data = data
+        return () => this.data.set(data)
     }
 
     allow() {
         return event => {
-            if(this.data != null)
+            if(this.data.get() != null)
                 event.preventDefault()
         }
     }
 
     drop(f) {
         return () => {
-            if(this.data != null)
-                f(this.data)
+            if(this.data.get() != null)
+                f(this.data.get())
         }
     }
 
     end() {
-        return () => this.data = null
+        return () => this.data.set(null)
     }
 
 }
