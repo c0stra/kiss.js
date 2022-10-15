@@ -69,6 +69,8 @@ populate(list).from(source,'.json')//.every(1000)
 
 setTimeout(() => source.set('data2'), 2000)
 
+setTimeout(() => list.update(), 5000)
+
 apply(function rule(node, prefix) {
 
     c.add(prefix + tagOf(node) + ' ')

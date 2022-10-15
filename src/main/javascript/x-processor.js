@@ -136,6 +136,7 @@ function populate(model) {
                 uriModel = valueModel(uriModel)
             let f = () => apply(request => model.set(JSON.parse(request.responseText))).onGetRequest(uriModel.get())
             uriModel.onChange(f)
+            model.update = f
             return {
                 every(millis) {
                     setInterval(f, millis)
