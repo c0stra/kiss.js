@@ -16,6 +16,11 @@ class XSignal {
 class XTransfer {
     constructor() {
         this.data = valueModel()
+        this.targetModel = this.data
+    }
+
+    setTargetModel(model) {
+        this.targetModel = model
     }
 
     drag(data) {
