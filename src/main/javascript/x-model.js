@@ -48,7 +48,7 @@ class XTransfer {
 }
 
 function transfer() {
-    return new XTransfer()
+    return valueModel()
 }
 
 class XValue {
