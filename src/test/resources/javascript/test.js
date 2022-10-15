@@ -21,6 +21,11 @@ let textareaModel = valueModel('textarea test')
 let list = listModel(['a', 'b', 'c'])
 
 let slot = transfer()
+let slotCandidate = mapBooleanModel(slot, "receiver")
+let slot1Over = booleanModel()
+let slot1OverClass = mapBooleanModel(slot1Over, " over")
+let slot2Over = booleanModel()
+let slot2OverClass = mapBooleanModel(slot2Over, " over")
 
 let obj = {}
 
@@ -44,7 +49,10 @@ body().add(
     textareaModel, br(), div().add('e: ', obj.e),
     each(list, c => div().add(c)),
     span().add('Drag me').transfer(slot, 'A'),
-    span(mapBooleanModel(slot, "receiver")).add('Drop here').receive(slot, data => alert(data))
+    br(), br(),
+    span(slotCandidate, slot1OverClass).add('Drop #1').receive(slot, data => alert(data)).receiving(slot, slot1Over),
+    br(),br(),
+    span(slotCandidate, slot2OverClass).add('Drop #2').receive(slot, data => alert(data)).receiving(slot, slot2Over)
 )
 
 items.add("Item 1")

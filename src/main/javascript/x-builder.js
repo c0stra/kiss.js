@@ -223,6 +223,10 @@ class XBuilder extends XNode {
         return this.onDragover(e => null !== channel.get() && e.preventDefault()).onDrop(() => null != channel.get() && action(channel.get()))
     }
 
+    receiving(channel, model) {
+        channel.onChange(event => event.value || model.set(false))
+        return this.onDragover(() => channel.get() && model.set(true)).onDragleave(set(model, false))
+    }
 
     /*
      Special binding
