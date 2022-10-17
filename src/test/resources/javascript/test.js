@@ -52,7 +52,13 @@ body().add(
     br(), br(),
     span(slotCandidate, slot1OverClass).add('Drop #1').receive(slot, data => alert(data)).receiving(slot, slot1Over),
     br(),br(),
-    span(slotCandidate, slot2OverClass).add('Drop #2').receive(slot, data => alert(data)).receiving(slot, slot2Over)
+    span(slotCandidate, slot2OverClass).add('Drop #2').receive(slot, data => alert(data)).receiving(slot, slot2Over),
+    table().add(
+        thead().add(tr().add(th().resize('horizontal').overflowX('hidden').add("A B C D E F G A H C"), th().resize('horizontal').overflowX('hidden').add("B"))),
+        tbody().add(
+            tr().add(td().overflowX('hidden').add("Content A"), td().overflowX('hidden').add("Content B"))
+        )
+    )
 )
 
 items.add("Item 1")

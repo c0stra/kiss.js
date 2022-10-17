@@ -190,6 +190,9 @@ class XBuilder extends XNode {
     transition(value) {return this.css('transition', value)}
     transform(value) {return this.css('transform', value)}
     rotate(value, unit) {return this.transform(X('rotate(', value, unit, ')'))}
+    overflow(value) {return this.css('overflow', value)}
+    overflowX(value) {return this.css('overflow-x', value)}
+    overflowY(value) {return this.css('overflow-y', value)}
 
     /*
      Dealing with events
