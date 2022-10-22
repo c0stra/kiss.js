@@ -48,6 +48,7 @@ body().add(
     textarea('y').model(textareaModel), br(),
     textareaModel, br(), div().add('e: ', obj.e),
     each(list, c => div().add(c)),
+    refresh(list, l => l, c => div().add(c)),
     span().add('Drag me').transfer(slot, 'A'),
     br(), br(),
     span(slotCandidate, slot1OverClass).add('Drop #1').receive(slot, data => alert(data)).receiving(slot, slot1Over),

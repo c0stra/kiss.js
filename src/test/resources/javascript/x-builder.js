@@ -323,6 +323,23 @@ function each(model, itemView = item => item, boundary = xText('')) {
     return f
 }
 
+function refresh(listModel, itemKey, itemView = item => item, boundary = xText('')) {
+    let f = fragment(boundary)
+    let viewMap = new Map()
+    listModel.onChange(event => {
+        viewMap.forEach(view => view.remove())
+        let nView = new Map()
+        event.value.forEach((item, i) => {
+            let key = itemKey(item)
+            let view = viewMap.has(key) ? viewMap.get(key) : itemView(item)
+            nView.set(key, view)
+            boundary.prepend(view)
+        })
+        viewMap = nView
+    })
+    return f
+}
+
 function buildView(model, builder, boundary = xText("")) {
     let b
     model.onChange(event => {
