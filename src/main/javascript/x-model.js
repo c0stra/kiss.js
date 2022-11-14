@@ -36,6 +36,12 @@ class XValue {
         this.signal.add(handler)
         if(initialize) handler({oldValue: this.value, value: this.value})
     }
+
+    map(f) {
+        let model = new XValue()
+        onChange(event => model.set(event.value))
+        return model
+    }
 }
 
 
