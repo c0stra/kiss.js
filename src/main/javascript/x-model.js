@@ -39,7 +39,7 @@ class XValue {
 
     map(f) {
         let model = new XValue()
-        onChange(event => model.set(event.value))
+        onChange(event => model.set(f(event.value)))
         return model
     }
 }
