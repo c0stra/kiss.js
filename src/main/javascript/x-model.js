@@ -43,7 +43,7 @@ class XValue {
         return model
     }
 
-    to(trueValue, falseValue = null) {
+    mapTo(trueValue, falseValue = null) {
         return this.map(v => v ? trueValue : falseValue)
     }
 }

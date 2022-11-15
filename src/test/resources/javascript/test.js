@@ -21,7 +21,7 @@ let textareaModel = valueModel('textarea test')
 let list = listModel(['a', 'b', 'c'])
 
 let slot = transfer()
-let slotCandidate = mapBooleanModel(slot, "receiver")
+let slotCandidate = slot.mapTo("receiver")
 let slot1Over = booleanModel()
 let slot1OverClass = mapBooleanModel(slot1Over, " over")
 let slot2Over = booleanModel()

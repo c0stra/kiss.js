@@ -36,6 +36,16 @@ class XValue {
         this.signal.add(handler)
         if(initialize) handler({oldValue: this.value, value: this.value})
     }
+
+    map(mappingFunction) {
+        let model = new XValue()
+        this.onChange(event => model.set(mappingFunction(event.value)))
+        return model
+    }
+
+    mapTo(trueValue, falseValue = null) {
+        return this.map(v => v ? trueValue : falseValue)
+    }
 }
 
 
