@@ -213,6 +213,7 @@ class XBuilder extends XNode {
     onChange(handler, bubble) {return this.on('change', handler, bubble)}
 
     onDragstart(handler) {return this.on('dragstart', handler, true)}
+    onDrag(handler) {return this.on('drag', handler, true)}
     onDrop(handler) {return this.on('drop', handler, true)}
     onDragend(handler) {return this.on('dragend', handler, true)}
     onDragover(handler) {return this.on('dragover', handler, true)}
