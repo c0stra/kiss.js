@@ -39,8 +39,12 @@ class XValue {
 
     map(f) {
         let model = new XValue()
-        onChange(event => model.set(f(event.value)))
+        this.onChange(event => model.set(f(event.value)))
         return model
+    }
+
+    to(trueValue, falseValue = null) {
+        return this.map(v => v ? trueValue : falseValue)
     }
 }
 
