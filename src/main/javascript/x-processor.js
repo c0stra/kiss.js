@@ -149,3 +149,80 @@ function populate(model) {
         }
     }
 }
+
+class XChannel {
+
+    constructor(uri, model = valueModel(), loading = booleanModel(), initialize = true) {
+        this.model = model
+        this.uri = uri instanceof XValue ? uri : valueModel(uri)
+        this.loading = loading.set(false)
+        this.uri.onChange(() => this.update(), initialize)
+    }
+
+    setModel(model) {
+        this.model = model
+        return this
+    }
+
+    getModel() {
+        return this.model
+    }
+
+    getLoading() {
+        return this.loading
+    }
+
+    setLoading(model) {
+        this.loading = model
+        return this
+    }
+
+    set(value) {
+        this.model.set(value)
+        this.loading.set(false)
+        return this
+    }
+
+    update() {
+        this.loading.set(true)
+        apply(request => this.set(JSON.parse(request.responseText))).onGetRequest(this.uri.get())
+        return this
+    }
+
+    every(milliseconds) {
+        setInterval(() => this.update(), milliseconds)
+        return this
+    }
+
+}
+
+function channel(...uri) {
+    return new XChannel(X(uri))
+}
+
+
+class XDemand {
+    constructor(expander, channel, initial) {
+        this.expander = expander
+        this.channel = channel.setLoading(this.expander.enabled)
+        this.initial = initial
+        this.expander.onChange(event => event.value ? this.channel.update() : this.channel.set(this.initial))
+    }
+
+    expand() {
+        return this.expander
+    }
+
+    getChannel() {
+        return this.channel
+    }
+
+    model() {
+        return this.channel.getModel()
+    }
+
+}
+
+function demand(channel, initial = null) {
+    return new XDemand(enabledValueModel(false), channel, initial)
+}

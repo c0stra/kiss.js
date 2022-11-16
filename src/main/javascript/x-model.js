@@ -1,5 +1,6 @@
 class XSignal {
 
+
     
     constructor() {
         this.handlers = []
