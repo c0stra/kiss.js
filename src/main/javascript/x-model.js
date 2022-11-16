@@ -1,10 +1,17 @@
 class XSignal {
+
+    
     constructor() {
         this.handlers = []
     }
 
     fire(event) {
-        for (let i = 0; i < this.handlers.length; i++) this.handlers[i](event)
+        for (let i = 0; i < this.handlers.length; i++) try {
+            this.handlers[i](event)
+        } catch(error) {
+            // We need not to prevent invoking all handlers
+            
+        }
     }
 
     add(handler) {
