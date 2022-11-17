@@ -313,16 +313,39 @@ function each(model, itemView = item => item, boundary = xText('')) {
     let f = fragment(boundary)
     if(model instanceof XList) {
         let views = []
+        function saveItem(item, view) {
+            if(item.get() instanceof DocumentFragment) {
+                for(let ch = item.get().firstChild; ch; ch = ch.firstChild)
+                    view.push(builder(ch))
+            }
+            else
+                view.push(item)
+            return item
+        }
         model.onChange(event => {
             views.forEach(view => view.remove())
-            views = new Array(event.value.length)
-            event.value.forEach((item, i) => boundary.prepend(views[i] = itemView(item)))
+            views = []
+            event.value.forEach((item, i) => boundary.prepend(saveItem(itemView(item), views)))
         })
     }
     else
         model.onNext(event => boundary.prepend(itemView(event.value)))
     return f
 }
+
+function range(start, model, itemView = item => item, end = xText('')) {
+    let f = fragment(start, end)
+    model.onChange(event => {
+        for(let n = start.get().nextSibling, s; n && n !== end.get(); n = s) {
+            s = n.nextSibling
+            builder(n).remove()
+        }
+        event.value.forEach((item, i) => end.prepend(itemView(item)))
+    })
+    return f
+}
+
+
 
 function refresh(listModel, itemKey, itemView = item => item, boundary = xText('')) {
     let f = fragment(boundary)
