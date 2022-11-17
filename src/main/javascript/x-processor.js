@@ -223,6 +223,6 @@ class XDemand {
 
 }
 
-function demand(channel, initial = null) {
-    return new XDemand(enabledValueModel(false), channel, initial)
+function demand(channel, initial = null, expander = enabledValueModel(false)) {
+    return new XDemand(expander, channel, initial)
 }
