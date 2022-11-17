@@ -335,17 +335,13 @@ function each(model, itemView = item => item, boundary = xText('')) {
 
 function range(start, model, itemView = item => item, end = xText('')) {
     let f = fragment(start, end)
-    //if(model instanceof XProducer)
-    //    model.onNext(event => boundary.prepend(itemView(event.value)))
-    //else {
-        model.onChange(event => {
-            for(let n = start.get().nextSibling, s; n && n !== end.get(); n = s) {
-                s = n.nextSibling
-                builder(n).remove()
-            }
-            event.value.forEach((item, i) => end.prepend(itemView(item)))
-        })
-    //}
+    model.onChange(event => {
+        for(let n = start.get().nextSibling, s; n && n !== end.get(); n = s) {
+            s = n.nextSibling
+            builder(n).remove()
+        }
+        event.value.forEach((item, i) => end.prepend(itemView(item)))
+    })
     return f
 }
 
