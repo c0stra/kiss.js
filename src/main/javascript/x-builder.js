@@ -340,7 +340,7 @@ function range(start, model, itemView = item => item, end = xText('')) {
             s = n.nextSibling
             builder(n).remove()
         }
-        event.value.forEach((item, i) => end.prepend(itemView(item)))
+        event.value.forEach(item => end.prepend(itemView(item)))
     })
     return f
 }
