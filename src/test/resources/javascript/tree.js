@@ -1,21 +1,26 @@
 
-let nodeDemand = demand(channel('data.json').setModel(listModel()), [])
+let demand1 = demand(channel('items1.json').setModel(listModel()), [])
+let demand2 = demand(channel('items2.json').setModel(listModel()), [])
 
 
 function node(channel, label, content) {
-    let d = demand(channel)
     return li().add(
-        expander(d.expand()), label,
-        ul().add(each(d.model(), item => content(item)))
+        expander(channel.expand()), label,
+        ul().add(each(channel.model(), item => content(item)))
     )
 }
 
-ul().add(
-    node(nodeDemand, 'Item 1', item => node()),
-    li().add(
-        expander(nodeDemand.expand()), 'Item 1',
-        ul().add(
-            each(nodeDemand.model(), item => li().add(item))
+body().add(
+    ul().add(
+        node(demand1, fragment(' Item 1 ', demand1.expand().mapTo("Expanded", "Collapsed")), item => {
+            let demand3 = demand(channel('items3.json').setModel(listModel()), [])
+            return node(demand3, ' ' + item, l2i => li().add(l2i))
+        }),
+        li().add(
+            expander(demand2.expand()), ' Item 1',
+            ul().add(
+                each(demand2.model(), item => li().add(item))
+            )
         )
     )
 )

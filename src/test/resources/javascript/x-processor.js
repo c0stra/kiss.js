@@ -149,3 +149,80 @@ function populate(model) {
         }
     }
 }
+
+class XChannel {
+
+    constructor(uri, model = valueModel(), ready = booleanModel()) {
+        this.model = model
+        this.uri = uri instanceof XValue ? uri : valueModel(uri)
+        this.ready = ready.set(true)
+        this.uri.onChange(() => this.update(), false)
+    }
+
+    setModel(model) {
+        this.model = model
+        return this
+    }
+
+    getModel() {
+        return this.model
+    }
+
+    getReady() {
+        return this.ready
+    }
+
+    setReady(model) {
+        this.ready = model
+        return this
+    }
+
+    set(value) {
+        this.model.set(value)
+        this.ready.set(true)
+        return this
+    }
+
+    update() {
+        this.ready.set(false)
+        apply(request => this.set(JSON.parse(request.responseText))).onGetRequest(this.uri.get())
+        return this
+    }
+
+    every(milliseconds) {
+        setInterval(() => this.update(), milliseconds)
+        return this
+    }
+
+}
+
+function channel(...uri) {
+    return new XChannel(X(uri))
+}
+
+
+class XDemand {
+    constructor(expander, channel, initial) {
+        this.expander = expander
+        this.channel = channel.setReady(this.expander.enabled)
+        this.initial = initial
+        this.expander.onChange(event => event.value ? this.channel.update() : this.channel.set(this.initial))
+    }
+
+    expand() {
+        return this.expander
+    }
+
+    getChannel() {
+        return this.channel
+    }
+
+    model() {
+        return this.channel.getModel()
+    }
+
+}
+
+function demand(channel, initial = null) {
+    return new XDemand(enabledValueModel(false), channel, initial)
+}

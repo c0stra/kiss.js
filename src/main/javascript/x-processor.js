@@ -152,11 +152,11 @@ function populate(model) {
 
 class XChannel {
 
-    constructor(uri, model = valueModel(), loading = booleanModel(), initialize = true) {
+    constructor(uri, model = valueModel(), ready = booleanModel()) {
         this.model = model
         this.uri = uri instanceof XValue ? uri : valueModel(uri)
-        this.loading = loading.set(false)
-        this.uri.onChange(() => this.update(), initialize)
+        this.ready = ready.set(true)
+        this.uri.onChange(() => this.update(), false)
     }
 
     setModel(model) {
@@ -168,23 +168,23 @@ class XChannel {
         return this.model
     }
 
-    getLoading() {
-        return this.loading
+    getReady() {
+        return this.ready
     }
 
-    setLoading(model) {
-        this.loading = model
+    setReady(model) {
+        this.ready = model
         return this
     }
 
     set(value) {
         this.model.set(value)
-        this.loading.set(false)
+        this.ready.set(true)
         return this
     }
 
     update() {
-        this.loading.set(true)
+        this.ready.set(false)
         apply(request => this.set(JSON.parse(request.responseText))).onGetRequest(this.uri.get())
         return this
     }
@@ -204,7 +204,7 @@ function channel(...uri) {
 class XDemand {
     constructor(expander, channel, initial) {
         this.expander = expander
-        this.channel = channel.setLoading(this.expander.enabled)
+        this.channel = channel.setReady(this.expander.enabled)
         this.initial = initial
         this.expander.onChange(event => event.value ? this.channel.update() : this.channel.set(this.initial))
     }
