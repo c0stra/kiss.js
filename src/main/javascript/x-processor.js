@@ -197,7 +197,7 @@ class XChannel {
 }
 
 function channel(...uri) {
-    return new XChannel(X(uri))
+    return new XChannel(X(...uri))
 }
 
 
