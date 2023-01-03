@@ -78,7 +78,7 @@ function apply(processor) {
                     if(SUCCESS_STATUSES.has(request.status))
                         process(request, ...args)
                     else
-                        this.onerror(new Error('Request failed: ' + request.status + ' ' + request.statusText + '\n\n' + request.responseText))
+                        this.onerror(new Error('Request failed: ' + request.status + ' ' + request.statusText + '\n\n' + request.responseText), request)
                 }
             }
         },
